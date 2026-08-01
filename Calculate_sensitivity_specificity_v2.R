@@ -1,3 +1,12 @@
+# Exploratory internal Ct-based performance analysis.
+# The truth variables represent operational reference classifications
+# assigned using the predefined Ct range of 18–35 together with an
+# appropriate sigmoidal amplification curve.
+# The pred variables represent classifications obtained with the
+# evaluated reactions.
+# No independent clinical reference standard was used.
+# The script contains aggregated contingency counts and does not
+# reconstruct classifications from sample-level Ct values.
 
 library(caret)
 library(ggplot2)
