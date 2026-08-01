@@ -7,7 +7,7 @@ This repository contains the **R code** used to calculate sensitivity, specifici
 
 The analysis compares the classifications obtained using the commercial RT-qPCR formulation and the denaturing solution method. Calculations were performed separately for the singleplex and multiplex reactions.
 
-This repository supports the exploratory diagnostic-performance calculations presented in **Table 4** of the associated article.
+This repository supports the exploratory internal performance calculations presented in Table 4 of the associated article. These calculations were based on predefined operational Ct criteria and did not use an independent clinical reference standard.
 
 ---
 
@@ -52,12 +52,14 @@ The expected or reference classification and the classification obtained with th
 
 In the R script:
 
-- `truth` represents the expected or reference classification.
-- `pred` represents the classification obtained with the evaluated assay.
+- `truth` represents the operational reference classification assigned internally using the predefined Ct range of 18–35 together with the presence of an appropriate sigmoidal amplification curve.
+- `pred` represents the positive or negative classification obtained with the evaluated reaction in each experimental block.
 - `Event` represents a positive result.
 - `No Event` represents a negative result.
 
 The `confusionMatrix()` function from the **caret** package was used to calculate the diagnostic-performance measures.
+
+In this exploratory analysis, TP, TN, FP, and FN refer to agreements or disagreements relative to the internal operational reference classification. They should not be interpreted as classifications established against an independent clinical reference standard.
 
 ---
 
@@ -121,6 +123,13 @@ The script calculates diagnostic-performance measures for four comparisons:
 3. Multiplex RT-qPCR using the commercial formulation.
 4. Multiplex RT-qPCR using the denaturing solution.
 
+The aggregated contingency counts were as follows:
+
+Singleplex commercial: TP = 6, FP = 2, FN = 8, TN = 1.
+Singleplex denaturing: TP = 2, FP = 8, FN = 0, TN = 0.
+Multiplex commercial: TP = 16, FP = 4, FN = 2, TN = 0.
+Multiplex denaturing: TP = 15, FP = 2, FN = 5, TN = 0.
+
 The dNTP formulation was not included in these diagnostic-performance calculations because the number and distribution of available positive and negative results did not allow a sufficiently informative **2 × 2 comparison**.
 
 ---
@@ -171,12 +180,16 @@ Sensitivity and specificity depend on the composition and size of the evaluated 
 
 A specificity value of zero indicates that, within that particular comparison, none of the reference-negative observations were classified as negative by the evaluated assay.
 
+For the commercial multiplex condition, specificity was calculated as TN/(TN + FP) = 0/(0 + 4) = 0.0. For the denaturing multiplex condition, specificity was calculated as 0/(0 + 2) = 0.0. These values resulted from the absence of true-negative classifications relative to the operational reference in the evaluated subsets. They should not be interpreted as evidence of zero analytical or clinical specificity.
+
 > This does not mean that the assay has zero specificity in every population, experiment, or application condition.
+
+The analysis was limited by the small and imbalanced experimental subsets and was based on aggregated contingency counts. Accordingly, the reported sensitivity, specificity, PPV, and NPV values are exploratory internal estimates and should not be extrapolated to clinical diagnostic performance.
 
 ---
 
 ## Data availability
 
-The experimental data associated with the article are available in the corresponding Zenodo repository:
+The analytical script and its supporting documentation are available in this GitHub repository. The experimental data associated with the article are available in the corresponding Zenodo repository:
 
 https://doi.org/10.5281/zenodo.6337537
